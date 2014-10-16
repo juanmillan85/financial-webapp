@@ -1,3 +1,88 @@
-<h2 id='title'>Welcome to Ember.js</h2>
+<div class="wrapper">
+  <div class="navbar navbar-inverse" role="navigation">
+    
+      {{#link-to "index" class="brand"}}
+      <img id="financiallife-main"class="pull-left img-responsive center-block" src="assets/images/financiallife.png">
+      {{/link-to}}
+    <div class="header">  
+      <ul class="nav navbar-nav search-lockup">
+        <li class="search-group">
+          {{input action="submit" type="text" class="search-input" placeholder="Discover trending news" valueBinding="controller.searchTerms"}}
+          <button {{action "submit"}} class="btn btn-primary"> <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
 
-{{outlet}}
+    <!-- Menu -->
+    <nav class="menu" id="theMenu">
+      <div class="menu-wrap">
+        <h1 class="logo">
+          <a href="index.html#home">FinanciaLife</a>
+        </h1> <i class="glyphicon glyphicon-remove menu-close"></i>
+        <a href="#home" class="smoothScroll">Interests</a>
+        <a href="#about" class="smoothScroll">Popular Trends </a>
+        <a href="#portfolio" class="smoothScroll">Timeline</a>
+      
+        <a href="#">
+          <i class="icon-facebook"></i>
+        </a>
+        <a href="#">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="#">
+          <i class="icon-dribbble"></i>
+        </a>
+        <a href="#">
+          <i class="icon-envelope"></i>
+        </a>
+      </div>
+
+      <!-- Menu button -->
+      <div id="menuToggle">
+        <img  src="assets/images/financiallife_settings.png"></div>
+    </nav>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+    {{outlet}}
+    <iframe src="http://ambiecities.com/financiallife/" width="100%" height="1000px" style="cursor: pointer"></iframe>
+    </div>
+  </div>
+</divg<footer>
+<div  id="bottomNav" class="navbar-inverse navbar-fixed-bottom">
+
+
+    <a href="#" class="col-sm-2 text-center">
+      
+        <i class="glyphicon glyphicon-time"></i>
+        Last Hour
+    
+    <a href="#" class="col-sm-2 text-center">
+      
+        <i class="glyphicon glyphicon-time"></i>
+        6 Hours
+    </a>
+    <a href="#" class="col-sm-2 text-center">
+      
+        <i class="glyphicon glyphicon-time"></i>
+        24 Hours
+    </a>
+    <a href="#" class="col-sm-2 text-center">
+     
+        <i class="glyphicon glyphicon-time"></i>
+        A week ago
+    </a>
+    <a href="#" class="col-sm-2 text-center">
+          
+          <i class="glyphicon glyphicon-time"></i>
+          A month ago        
+     
+    </a>
+    <label class="col-sm-1 text-center">Timeline</label>
+
+</div>
+
+</div>
+</footer>

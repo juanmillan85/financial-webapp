@@ -5,6 +5,9 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+   this.route('search-results', {
+    path: 'search/:term'
+  });
 });
 
 export default Router;

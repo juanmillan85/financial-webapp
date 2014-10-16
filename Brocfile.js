@@ -17,4 +17,35 @@ var app = new EmberApp();
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-module.exports = app.toTree();
+//module.exports = app.toTree();
+// Import a couple of modules;
+var compileSass = require('broccoli-sass');
+//var mergeTrees  = require('broccoli-merge-trees');
+
+// List all of the directories containing SASS source files
+var sassSources = [
+  'app/styles',
+  'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap'
+]
+
+// Compile a custom sass file, with the sources that need to be included
+var appCss = compileSass( sassSources , 'app.scss', 'assets/vendor.css');
+
+// Merge the ember app and the custom css into a single tree for export
+//var appAndCustomDependencies = mergeTrees([app.toTree(),appCss], {
+//  overwrite: true
+//});
+
+// EXPORT ALL THE THINGS!
+//module.exports = appAndCustomDependencies;
+
+app.import('bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js');
+app.import('bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss');
+var pickFiles = require('broccoli-static-compiler');
+var bootstrapFonts = pickFiles('bower_components/bootstrap-sass-official/assets/fonts/bootstrap', {
+    srcDir: '/',
+    destDir: '/fonts/bootstrap'
+});
+// Merge the bootstrapFonts with the ember app tree
+var mergeTrees = require('broccoli-merge-trees');
+module.exports = mergeTrees([app.toTree(),bootstrapFonts]);
