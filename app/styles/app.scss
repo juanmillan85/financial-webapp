@@ -1,6 +1,16 @@
-@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';
+/*@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';
 @import url(http://fonts.googleapis.com/css?family=Pirata+One|Yanone+Kaffeesatz:400,700,300);
-$icon-font-path: "vendor/bootstrap-sass-official/assets/fonts/bootstrap" !default;
+$icon-font-path: "vendor/bootstrap-sass-official/assets/fonts/bootstrap" !default;*/
+
+
+
+$icon-font-path: "../fonts/bootstrap/" ;
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
+@import url("http://fonts.googleapis.com/css?family=Pirata+One|Yanone+Kaffeesatz:400,700,300");
+
+$fa-font-path: "../fonts/font-awesome";
+@import "bower_components/fontawesome/scss/font-awesome.scss";
+
 
 $rockin:'Yanone Kaffeesatz', sans-serif;
 $fancy: 'Yanone Kaffeesatz', sans-serif;
@@ -13,7 +23,7 @@ html, body {
 
 html {
 	/* page bg img courtesy National Photo Company: http://commons.wikimedia.org/wiki/File:DCJCC_stage.jpg */
-	background: url(../images/stage.jpg) no-repeat center center fixed;
+	/*background: url(../images/stage.jpg) no-repeat center center fixed;*/
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -38,12 +48,14 @@ body {
 }
 
 div.wrapper {
+  background:#b3b3b3;//#F8F8F8;
   padding: 0 0 40px 0;
   min-height: 100%;
   height: auto !important;
   height: 100%;
   /* Negative indent footer by it's height */
   margin: 0 auto -40px;
+
 }
 
 footer {
@@ -70,6 +82,7 @@ footer {
 	left: 0px;
    	z-index:1;
    	width:100%;
+   	border-radius:0px;
 }
 .navbar-inverse {
 	
@@ -137,45 +150,91 @@ footer {
 
 }
 
-div.search-results-wrapper {
-	border-radius: 8px;
-	background-color: rgba(255,255,255,.7);
+.container-fluid{
+	padding-top: 53px;
+	div.search-results-wrapper {
+		border-radius:0px;
+		background:#b3b3b3;
+		
 
-	div.search-facets {
-		float: left;
-		ul.facets li {
-			list-style: none;
+		div.search-facets {
+			
+			//margin:  2px  2px 2px 2px;
+			float: left;
+			padding-left:0px;
+			ul.facets {
+				background-color: rgba(255,255,255,.7);
+				border-radius:8px;
+				padding:8px;
+				li {
+					list-style: none;
+				}
+			}
 		}
-	}
+		div.timeline{
+			background-color: rgba(255,255,255,.7);
+			float: left;
+			border-radius:8px;
+			margin: 0 0 10px 0;
+		}
 
-	div.results {
-		float: left;
-		ul.search-results {
-			li {
-				list-style: none;
+		div.results {
+			border-radius:8px;
+			//margin:  2px  2px 2px 2px;
+			background-color: rgba(255,255,255,.7);
+			float: left;
+			ul.search-results {
+				padding-left:2px;
+				li {
+					list-style: none;
 
-				a {
-					cursor: pointer;
+					a {
+						cursor: pointer;
+					}
 				}
-			}
 
-			&.artists li {
-				::before {
-					content:"\e008";
-					font-family: 'Glyphicons Halflings';
-					position: relative;
-					left: -4px;
-					top: 2px;
+				&.artists li div {
+					.cla::before {
+						content:"\E032";
+						font-family: 'Glyphicons Halflings';
+						position: relative;
+						left: -4px;
+						top: 2px;
+					}
 				}
-			}
-			&.songs li {
-				::before {
-					content:"\e002";
-					font-family: 'Glyphicons Halflings';
-					position: relative;
-					left: -4px;
-					top: 2px;
+				&.songs li {
+					::before {
+						content:"\e002";
+						font-family: 'Glyphicons Halflings';
+						position: relative;
+						left: -4px;
+						top: 2px;
+					}
 				}
+				.item{
+					margin-bottom:10px;
+					.img-item-header{
+					max-height: 48px;
+					padding:0;
+					}
+					.media-body{
+						padding-left:4px;
+						.media-heading{
+							padding-left:0px;
+						}
+						.img-responsive{
+							max-height: 70%;
+							max-width: 90%;
+						}
+						.img-thumbnail{
+							padding:0px;
+						}
+					}
+				}
+				.item:hover{
+					background:#dbdbdb;
+				}
+
 			}
 		}
 	}
@@ -358,6 +417,30 @@ h4 {
 div.loading {
 	font-family: $rockin;
 }
+/**
+Timeline Chart
+*/
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #555;
+  shape-rendering: crispEdges;
+}
+ 
+.axis text {
+  fill: #555;
+}
+ 
+.line {
+  fill: none;
+  stroke: #ef0d0c;
+  stroke-width: 1.5px;
+}
+#graph{
+
+}
+
+
 
 #lp {
 	position: absolute;
@@ -710,5 +793,5 @@ a:after {
 }
 
 .navbar-fixed-bottom{
-	height:10%;
+	height:5%;
 }

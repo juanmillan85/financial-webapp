@@ -3,7 +3,8 @@
     "document": true,
     "window": true,
     "-Promise": true,
-    "FinancialWebappENV": true
+    "FinancialWebappENV": true,
+    "twttr":true
   },
   "browser" : true,
   "boss" : true,

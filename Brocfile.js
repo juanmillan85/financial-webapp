@@ -25,7 +25,7 @@ var compileSass = require('broccoli-sass');
 // List all of the directories containing SASS source files
 var sassSources = [
   'app/styles',
-  'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap'
+  'bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap'
 ]
 
 // Compile a custom sass file, with the sources that need to be included
@@ -41,11 +41,18 @@ var appCss = compileSass( sassSources , 'app.scss', 'assets/vendor.css');
 
 app.import('bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js');
 app.import('bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss');
+
+app.import('bower_components/fontawesome/scss/font-awesome.scss');
+app.import('bower_components/twitter-text/twitter-text.js');
 var pickFiles = require('broccoli-static-compiler');
 var bootstrapFonts = pickFiles('bower_components/bootstrap-sass-official/assets/fonts/bootstrap', {
     srcDir: '/',
-    destDir: '/fonts/bootstrap'
+    destDir: 'fonts/bootstrap'
+});
+var awesomeFonts = pickFiles('bower_components/fontawesome/fonts', {
+    srcDir: '/',
+    destDir: 'fonts/font-awesome'
 });
 // Merge the bootstrapFonts with the ember app tree
 var mergeTrees = require('broccoli-merge-trees');
-module.exports = mergeTrees([app.toTree(),bootstrapFonts]);
+module.exports = mergeTrees([app.toTree(),bootstrapFonts,awesomeFonts]);

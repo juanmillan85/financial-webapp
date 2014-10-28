@@ -1,16 +1,59 @@
-<div class="search-results-wrapper clearfix">
-  <div class="search-facets col-md-2">
-    <h3>Show:</h3>
-    <ul class="facets">
-      <li>
-        <label>Artists</label>
-       
-      </li>
-      <li>
-        <label>Songs</label>
-        
-      </li>
-    </ul>
-  </div>
+<div class="container-fluid">
+  <div class="row-fluid">
 
+    <div class="search-results-wrapper clearfix">
+      <div class="col-md-12">
+        <h5>205604 results for $GOOG</h5>
+      </div>
+      <div class="search-facets col-md-2">
+
+        <ul class="facets">
+          <li>
+            <label>Related Users</label>
+            <p>Financial News</p>
+            <p>New York Time</p>
+            <p>@CarlitosNews</p>
+            <p>@OpeniTrending</p>
+          </li>
+          <li>
+            <label>CashTags</label>
+            <p>$GOOG</p>
+            <p>$APL</p>
+            <p>$FB</p>
+            <p>$OPENi</p>
+          </li>
+        </ul>
+      </div>
+      <div class="timeline col-md-10">
+        <h3>Timeline</h3>
+        <svg id="graph" class="col-md-10"></svg>
+      </div>
+
+      <div class="results col-md-10">
+        {{#if items.length}}
+        <h3>Social Media News</h3>
+
+        <ul class="search-results artists">
+          {{#each item in items}}
+          <li>{{view 'item' contentBinding="item"}}</li>
+          {{/each}}
+        </ul>
+        {{/if}}
+        <h3>Songs</h3>
+        <ul class="search-results songs">
+
+          <li>
+            <a>Search</a>
+          </li>
+          <li>
+            <a>Search</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
 </div>

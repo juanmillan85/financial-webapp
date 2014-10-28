@@ -1,0 +1,25 @@
+{{image-profile item}}
+<div class="media-body">
+	<span class="media-heading"> <strong>{{item.authorFullName}}</strong>
+		<span class='timestamp pull-right'>
+			<a >{{ago item.publicationDate}}</a>
+		</span>
+	</span>
+	{{header-item item}}
+</span>
+<p>{{parse-item item.text}}</p>
+
+	{{#if item.entities.length}}
+	<div  class="row">
+	 {{#each entitie in item.entities}}
+		<a href="#" class="">
+			<img {{bind-attr src="entitie"}} class="img-thumbnail img-responsive"></a>
+
+	{{/each}}
+	</div>
+	{{/if}}
+<span> <i class="fa fa-twitter"></i> <i class="fa fa-retweet">{{item.shares}}</i>
+	<i class="fa fa-star">{{item.likes}}</i>
+</span>
+
+</div>
