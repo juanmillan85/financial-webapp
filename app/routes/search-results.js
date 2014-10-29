@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+      activate: function() {
+      this._super();
+      window.scrollTo(0, 0);
+  },
     model: function(query) {
         var self = this;
-        var url = "http://localhost:8079/news?q=" + query.term + '&p=10&sortby=created_at&sortasc=true&tq=h&ntq=60';
+        var url = "http://ambiecities.com:8079/news?q=" + query.term + '&p=10&sortby=created_at&sortasc=true&tq=h&ntq=60';
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
             $.ajax({
                 type: 'GET',

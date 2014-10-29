@@ -1,6 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
+  needs:"application",
+  searchTermsBinding : 'controllers.application.searchTerms',
+  applicationName: function() {
+    console.log("jjee");
+    var st = this.get('searchTerms');
+    if (st) {
+      return st + "???";
+    } else {
+      return "Financial Life";
+    }
+  }.property('searchTerms'),
   artistsIsChecked: true,
   songsIsChecked: true,
   actions: {
