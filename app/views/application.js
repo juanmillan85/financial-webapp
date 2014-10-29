@@ -6,6 +6,7 @@ export default Ember.View.extend({
 
     }.on('didInsertElement'),
     didInsertElement: function() {
+        
         this.$('#menuToggle, .menu-close').on('click', function() {
             $('#menuToggle').toggleClass('active');
             $('body').toggleClass('body-push-toleft');
@@ -21,8 +22,11 @@ export default Ember.View.extend({
             }
         });
         this.$('#bottomNav').headroom("destroy");
+
         this.$('#bottomNav a').click(function() {
             $(this).addClass('selected').siblings().removeClass('selected');
         });
+
+        
     }
 });

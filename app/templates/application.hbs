@@ -48,34 +48,29 @@
 </div>
 <footer>
 <div  id="bottomNav" class="navbar-inverse navbar-fixed-bottom">
+  {{#link-to "search-results" (query-params tq="m" ntq=60 timefilter='filter-hour') id="filter-hour"  class="col-sm-2 text-center " }}
+  <i class="glyphicon glyphicon-time"></i>
+  Last Hour
+  {{/link-to}}
+  {{#link-to "search-results" (query-params tq="h" ntq=6 timefilter='filter-six') id="filter-six"  class="col-sm-2 text-center " }}
+  <i class="glyphicon glyphicon-time"></i>
+  6 Hours
+  {{/link-to}}
+  {{#link-to "search-results" (query-params tq="d" ntq=1 timefilter='filter-twenty')  id="filter-twenty" class="col-sm-2 text-center " }}
+  <i class="glyphicon glyphicon-time"></i>
+  24 Hours
+  {{/link-to}}
+  {{#link-to "search-results" (query-params tq="d" ntq=6 timefilter='filter-week') id="filter-week"  class="col-sm-2 text-center " }}
+  <i class="glyphicon glyphicon-time"></i>
+  A week ago
+  {{/link-to}}
+  {{#link-to "search-results" (query-params tq="d" ntq=30 timefilter='filter-month') id="filter-month"  class="col-sm-2 text-center selected" }}
+  <i class="glyphicon glyphicon-time"></i>
+  A month ago
+  {{/link-to}}
+  <label class="col-sm-1 text-center">Timeline</label>
 
-  <a href="#" class="col-sm-2 text-center">
-
-    <i class="glyphicon glyphicon-time"></i>
-    Last Hour
-    <a href="#" class="col-sm-2 text-center">
-
-      <i class="glyphicon glyphicon-time"></i>
-      6 Hours
-    </a>
-    <a href="#" class="col-sm-2 text-center">
-
-      <i class="glyphicon glyphicon-time"></i>
-      24 Hours
-    </a>
-    <a href="#" class="col-sm-2 text-center">
-
-      <i class="glyphicon glyphicon-time"></i>
-      A week ago
-    </a>
-    <a href="#" class="col-sm-2 text-center selected">
-
-      <i class="glyphicon glyphicon-time"></i>
-      A month ago
-    </a>
-    <label class="col-sm-1 text-center">Timeline</label>
-
-  </div>
+</div>
 
 </div>
 </footer>
