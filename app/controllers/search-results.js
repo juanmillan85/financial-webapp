@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.ObjectController.extend({
     needs: "application",
     searchTermsBinding: 'controllers.application.searchTerms',
+    items:null,
+    totalResults:null,
     applicationName: function() {
         var st = this.get('searchTerms');
         if (st) {
@@ -18,12 +20,19 @@ export default Ember.ObjectController.extend({
     artistsIsChecked: true,
     songsIsChecked: true,
     queryParams: ['q', 'page', 'sortby', 'tq', 'ntq','timefilter'],
+    //query
     q: null,
+    //page size
     page: null,
     sortby: null,
+    //timequery
     tq: null,
+    //number timequery
     ntq: null,
+    //timefilter
     timefilter:null,
+    //total results after searching
+    
     actions: {
 
         viewedTweet: function(model) {

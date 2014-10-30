@@ -15,16 +15,19 @@ export default Ember.Route.extend({
         sortby: {
             refreshModel: true
         },
-        tq:{
-            refreshModel:true
+        tq: {
+            refreshModel: true
         },
-        ntq:{
-            refreshModel:true
+        ntq: {
+            refreshModel: true
         }
     },
     model: function(params) {
         var self = this;
-        var p,q, sortby, sortasc, tq, ntq;
+
+
+        console.log(params);
+        var p, q, sortby, sortasc, tq, ntq;
         if (!params.q) {
             return []; // no results;
         }
@@ -38,8 +41,10 @@ export default Ember.Route.extend({
 
 
 
-        var url = "http://localhost:8079/news?q=" + q+ '&p='+p+'&sortby='+sortby+'&sortasc='+sortasc+'&tq='+tq+'&ntq='+ntq;
-        var promise = new Ember.RSVP.Promise(function(resolve, reject) {
+        var url = "http://localhost:8079/news?q=" + q + '&p=' + p + '&sortby=' + sortby + '&sortasc=' + sortasc + '&tq=' + tq + '&ntq=' + ntq;
+
+
+        return new Ember.RSVP.Promise(function(resolve, reject) {
             $.ajax({
                 type: 'GET',
                 // The URL to make the request to.
@@ -51,30 +56,31 @@ export default Ember.Route.extend({
                 }
             }).then(
                 function(resp) {
-                    resolve(resp);
+
+                    //console.log(resp);
+                    var results = resp.items;
+                    //return items
+                    var items = [],
+                        i = 0,
+                        entry = null;
+                    for (i = 0; i < results.length; i++) {
+                        entry = results[i];
+                        var item = self.store.push('item', entry);
+                        items.push(item);
+                    }
+                    resolve({
+                        items: items,totalResults:resp.numResults
+                    });
+
                 },
                 function(error) {
                     reject(resp);
                 }
             );
         });
-        return promise.then(function(resp) {
-            console.log(resp);
-            var results = resp.items;
-            var items = [],
-                i = 0,
-                entry = null;
-            for (i = 0; i < results.length; i++) {
-                entry = results[i];
-                var item = self.store.push('item', entry);
-                items.push(item);
-            }
-            return {
-                items: items
-            }
-        }, function(resp) {
-            console.log(resp);
-        });
+
+
     }
+
 
 });
