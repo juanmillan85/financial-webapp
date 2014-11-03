@@ -32,7 +32,7 @@ export default Ember.Route.extend({
             return []; // no results;
         }
         q = params.q ? params.q : 'news';
-        p = params.page ? params.page : 10;
+        p = params.page ? params.page : 0;
         sortby = params.sortby ? params.sortby : 'created_at';
         sortasc = params.sortasc ? params.sortasc : true;
         tq = params.tq ? params.tq : 'd';
