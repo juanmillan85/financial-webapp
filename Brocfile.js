@@ -45,6 +45,13 @@ app.import('bower_components/headroom.js/dist/headroom.min.js');
 app.import('bower_components/headroom.js/dist/jQuery.headroom.min.js');
 app.import('bower_components/fontawesome/scss/font-awesome.scss');
 app.import('bower_components/twitter-text/twitter-text.js');
+app.import('bower_components/d3/d3.min.js');
+app.import('bower_components/c3/c3.css');
+app.import('bower_components/c3/c3.min.js');
+//app.import('bower_components/ember-c3/build/lib.js');
+
+
+
 var pickFiles = require('broccoli-static-compiler');
 var bootstrapFonts = pickFiles('bower_components/bootstrap-sass-official/assets/fonts/bootstrap', {
     srcDir: '/',

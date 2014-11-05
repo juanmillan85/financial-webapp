@@ -1,9 +1,9 @@
 import Ember from 'ember';
-
+import ajax from 'ic-ajax';
 export default Ember.Route.extend({
     activate: function() {
         this._super();
-        window.scrollTo(0, 0);
+       
     },
     queryParams: {
         q: {
@@ -44,8 +44,7 @@ export default Ember.Route.extend({
         var url = "http://localhost:8079/news?q=" + q + '&p=' + p + '&sortby=' + sortby + '&sortasc=' + sortasc + '&tq=' + tq + '&ntq=' + ntq;
 
 
-        return new Ember.RSVP.Promise(function(resolve, reject) {
-            $.ajax({
+         ajax({
                 type: 'GET',
                 // The URL to make the request to.
                 url: url,
@@ -68,19 +67,33 @@ export default Ember.Route.extend({
                         var item = self.store.push('item', entry);
                         items.push(item);
                     }
-                    resolve({
-                        items: items,totalResults:resp.numResults
-                    });
+                    
+                    //self.set('items',items);
+                     self.controllerFor('searchResults').set('items',items);
+                     self.controllerFor('searchResults').set('totalResults',resp.numResults);
+                   //  self.controllerFor('searchResults').set('timeline', resp.timeline)
+                    //self.controllerFor('application').set('items',items);
+
+                    
 
                 },
                 function(error) {
-                    reject(resp);
+                   //send error event
                 }
             );
-        });
+            //page 
+            return p;
+        
 
 
-    }
+    },
+   
+   afterModel: function(page, transition) {
+    console.log(transition);
+    if(!page)
+    window.scrollTo(0, 0);
+
+  }
 
 
 });

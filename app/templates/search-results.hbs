@@ -2,7 +2,7 @@
 
     <div class="search-results-wrapper clearfix">
       <div class="col-md-12">
-        <h5>{{model.totalResults}} results for {{#link-to "search-results" }}{{applicationName}}{{/link-to}}</h5>
+        <h5>{{this.totalResults}} results for {{#link-to "search-results" }}{{applicationName}}{{/link-to}}</h5>
       </div>
       <div class="search-facets col-md-2">
 
@@ -29,11 +29,11 @@
       </div>
 
       <div class="results col-md-10">
-        {{#if model.items.length}}
+        {{#if this.items.length}}
         <h3>Social Media News</h3>
 
         <ul class="search-results artists">
-          {{#each item in model.items}}
+          {{#each item in this.items}}
           <li>{{view 'item' contentBinding="item"}}</li>
           {{/each}}
         </ul>

@@ -3,8 +3,11 @@ import Ember from 'ember';
 export default Ember.ObjectController.extend({
     needs: "application",
     searchTermsBinding: 'controllers.application.searchTerms',
-    items:null,
-    totalResults:null,
+    items: {},
+    totalResults: null,
+    didItemsChange: function() {
+        var items = this.get('items');
+    }.observes('items.length'),
     applicationName: function() {
         var st = this.get('searchTerms');
         if (st) {
@@ -13,13 +16,13 @@ export default Ember.ObjectController.extend({
             return "Financial Life";
         }
     }.property('searchTerms'),
-    queryChange:function(){
-        if(!this.get('searchTerms'))
-        this.set('searchTerms',this.get('q'));
+    queryChange: function() {
+        if (!this.get('searchTerms'))
+            this.set('searchTerms', this.get('q'));
     }.observes('q'),
     artistsIsChecked: true,
     songsIsChecked: true,
-    queryParams: ['q', 'page', 'sortby', 'tq', 'ntq','timefilter'],
+    queryParams: ['q', 'page', 'sortby', 'tq', 'ntq', 'timefilter'],
     //query
     q: null,
     //page size
@@ -30,9 +33,9 @@ export default Ember.ObjectController.extend({
     //number timequery
     ntq: null,
     //timefilter
-    timefilter:null,
+    timefilter: null,
     //total results after searching
-    
+
     actions: {
 
         viewedTweet: function(model) {
