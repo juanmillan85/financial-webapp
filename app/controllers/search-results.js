@@ -5,6 +5,8 @@ export default Ember.ObjectController.extend({
     searchTermsBinding: 'controllers.application.searchTerms',
     items: {},
     totalResults: null,
+    timelineModel: {},
+    timelineAxis:{},
     didItemsChange: function() {
         var items = this.get('items');
     }.observes('items.length'),

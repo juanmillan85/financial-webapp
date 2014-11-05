@@ -25,10 +25,14 @@
       </div>
       <div class="timeline col-md-10">
         <h3>Timeline</h3>
-        <svg id="graph" class="col-md-10"></svg>
+         {{#if this.timelineModel}}
+        {{timeline-chart  axis=this.timelineAxis data=this.timelineModel}}
+         {{else}}
+           <h4>Loading</h4>
+        {{/if}}
       </div>
 
-      <div class="results col-md-10">
+      <div class="results col-md-8 col-md-offset-2">
         {{#if this.items.length}}
         <h3>Social Media News</h3>
 

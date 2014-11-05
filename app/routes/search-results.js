@@ -3,7 +3,7 @@ import ajax from 'ic-ajax';
 export default Ember.Route.extend({
     activate: function() {
         this._super();
-       
+
     },
     queryParams: {
         q: {
@@ -44,56 +44,97 @@ export default Ember.Route.extend({
         var url = "http://localhost:8079/news?q=" + q + '&p=' + p + '&sortby=' + sortby + '&sortasc=' + sortasc + '&tq=' + tq + '&ntq=' + ntq;
 
 
-         ajax({
-                type: 'GET',
-                // The URL to make the request to.
-                url: url,
-                contentType: 'application/json',
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: false
-                }
-            }).then(
-                function(resp) {
+        ajax({
+            type: 'GET',
+            // The URL to make the request to.
+            url: url,
+            contentType: 'application/json',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: false
+            }
+        }).then(
+            function(resp) {
 
-                    //console.log(resp);
-                    var results = resp.items;
-                    //return items
-                    var items = [],
-                        i = 0,
-                        entry = null;
-                    for (i = 0; i < results.length; i++) {
-                        entry = results[i];
-                        var item = self.store.push('item', entry);
-                        items.push(item);
+                //console.log(resp);
+                var results = resp.items;
+                //return items
+                var items = [],
+                    i = 0,
+                    entry = null;
+                for (i = 0; i < results.length; i++) {
+                    entry = results[i];
+                    var item = self.store.push('item', entry);
+                    items.push(item);
+                }
+
+                //self.set('items',items);
+                self.controllerFor('searchResults').set('items', items);
+                self.controllerFor('searchResults').set('totalResults', resp.numResults);
+                var timeline = [];
+                var facet = resp.timelineState.facets.timeline.facets;
+                for (var i = 0; i < facet.length; i++) {
+
+                    timeline.push({
+                        value: Number(facet[i].value),
+                        count: facet[i].count
+                    });
+                }
+                var model = {
+                    json: timeline,
+                    keys: {
+                        x: 'value',
+                        value: ['count']
+                    },
+                    names: {
+                        count: 'Number of Tweet '
                     }
-                    
-                    //self.set('items',items);
-                     self.controllerFor('searchResults').set('items',items);
-                     self.controllerFor('searchResults').set('totalResults',resp.numResults);
-                   //  self.controllerFor('searchResults').set('timeline', resp.timeline)
-                    //self.controllerFor('application').set('items',items);
+                };
+                var x = +resp.timelineState.facets.timeline.facets[0].value;
+                var date = window.moment(x).format('YYYY-MM-DDTHH');
+                console.log(date);
+                var axis = {
 
-                    
+                    x: {
+                        type: 'timeseries',
+                        tick: {
 
-                },
-                function(error) {
-                   //send error event
-                }
-            );
-            //page 
-            return p;
-        
+                            format: function(x) {
+
+                                // + to convert to Number
+                                var formatDate = window.moment(+x).format('YYYY-MM-DDTHH');
+                                return formatDate;
+                            }
+
+
+                        }
+                    }
+
+                };
+                self.controllerFor('searchResults').set('timelineModel', model);
+                self.controllerFor('searchResults').set('timelineAxis', axis);
+                //self.controllerFor('application').set('items',items);
+
+
+
+            },
+            function(error) {
+                //send error event
+            }
+        );
+        //page 
+        return p;
+
 
 
     },
-   
-   afterModel: function(page, transition) {
-    console.log(transition);
-    if(!page)
-    window.scrollTo(0, 0);
 
-  }
+    afterModel: function(page, transition) {
+        console.log(transition);
+        if (!page)
+            window.scrollTo(0, 0);
+
+    }
 
 
 });
