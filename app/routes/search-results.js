@@ -103,7 +103,11 @@ export default Ember.Route.extend({
                             format: function(x) {
 
                                 // + to convert to Number
-                                var formatDate = window.moment(+x).fromNow();//window.moment(+x).format('YYYY-MM-DDTHH');
+                              
+                                var now=window.moment();
+                                var date=window.moment(+x);
+                                var formatDate=date.from(now);
+                                //var formatDate = window.moment(+x).fromNow(true);//window.moment(+x).format('YYYY-MM-DDTHH');
                                 return formatDate;
                             }
 

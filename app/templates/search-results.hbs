@@ -23,13 +23,16 @@
           </li>
         </ul>
       </div>
-      <div class="timeline col-md-10">
+      <div class="timeline col-xs-10">
         <h3>Timeline</h3>
          {{#if this.timelineModel}}
+         <div id="chart">
+
         {{timeline-chart  axis=this.timelineAxis data=this.timelineModel query=this.q}}
          {{else}}
            <h4>Loading</h4>
         {{/if}}
+        </div>
       </div>
 
       <div class="results col-md-8 col-md-offset-2">
