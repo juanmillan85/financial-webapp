@@ -94,9 +94,7 @@ export default Ember.Component.extend({
         var dataCache = this.get('dataCache');
         var names = data.names.count;
         var dataNames = dataCache ? dataCache.names.count : undefined;
-        var result=!(names == dataNames)
-        console.log(names);
-        console.log(dataNames);
+        var result=!(names == dataNames);
         return result;
     },
 

@@ -91,6 +91,11 @@ export default Ember.Route.extend({
                     },
                     names: {
                         count: query
+                    },
+                    type: 'area',
+
+                    types:{
+                        count:'area-spline'
                     }
                 };
                
