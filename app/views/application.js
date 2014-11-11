@@ -8,7 +8,7 @@ export default Ember.View.extend({
     didInsertElement: function() {
         
         this.$('#menuToggle, .menu-close').on('click', function() {
-            $('#menuToggle').toggleClass('active');
+            $('#menuToggle').toggleClass('hide');
             $('body').toggleClass('body-push-toleft');
             $('#theMenu').toggleClass('menu-open');
         });

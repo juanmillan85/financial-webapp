@@ -546,7 +546,7 @@ Timeline Chart
 .menu {
 	position: fixed;
 	right: -200px;
-	width: 260px;
+	width: 200px;
 	height: 100%;
 	top: 0;
 	z-index: 10;
@@ -560,7 +560,7 @@ Timeline Chart
 .menu-wrap {
 	position: absolute;
 	top: 0;
-	left: 60px;
+	//left: 60px;
 	background: #1a1a1a;
 	width: 200px;
 	height: 100%;
@@ -671,7 +671,7 @@ Timeline Chart
 #menuToggle {
 	position: absolute;
 	top: 1px;
-	left: 10px;
+	left: -50px;
 	z-index: 11;
 	display: block;
 	text-align: center;
