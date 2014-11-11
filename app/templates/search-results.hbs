@@ -26,7 +26,7 @@
       <div class="timeline col-md-10">
         <h3>Timeline</h3>
          {{#if this.timelineModel}}
-        {{timeline-chart  axis=this.timelineAxis data=this.timelineModel}}
+        {{timeline-chart  axis=this.timelineAxis data=this.timelineModel query=this.q}}
          {{else}}
            <h4>Loading</h4>
         {{/if}}

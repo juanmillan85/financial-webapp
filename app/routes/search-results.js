@@ -31,7 +31,7 @@ export default Ember.Route.extend({
         if (!params.q) {
             return []; // no results;
         }
-        q = params.q ? params.q : 'news';
+        q = params.q ? params.q : '';
         p = params.page ? params.page : 0;
         sortby = params.sortby ? params.sortby : 'created_at';
         sortasc = params.sortasc ? params.sortasc : true;
@@ -41,9 +41,9 @@ export default Ember.Route.extend({
 
 
 
-        var url = "http://localhost:8079/news?q=" + q + '&p=' + p + '&sortby=' + sortby + '&sortasc=' + sortasc + '&tq=' + tq + '&ntq=' + ntq;
+        var url = "http://ambiecities.com:8079/news?q=" + q + '&p=' + p + '&sortby=' + sortby + '&sortasc=' + sortasc + '&tq=' + tq + '&ntq=' + ntq;
 
-
+        q = q != "" ? q : "Number of Tweets";
         ajax({
             type: 'GET',
             // The URL to make the request to.
@@ -72,6 +72,7 @@ export default Ember.Route.extend({
                 self.controllerFor('searchResults').set('items', items);
                 self.controllerFor('searchResults').set('totalResults', resp.numResults);
                 var timeline = [];
+                  var query=self.controllerFor('searchResults').get('searchTerms');
                 var facet = resp.timelineState.facets.timeline.facets;
                 for (var i = 0; i < facet.length; i++) {
 
@@ -80,6 +81,8 @@ export default Ember.Route.extend({
                         count: facet[i].count
                     });
                 }
+               
+                 console.log(query);
                 var model = {
                     json: timeline,
                     keys: {
@@ -87,12 +90,10 @@ export default Ember.Route.extend({
                         value: ['count']
                     },
                     names: {
-                        count: 'Number of Tweet '
+                        count: query
                     }
                 };
-                var x = +resp.timelineState.facets.timeline.facets[0].value;
-                var date = window.moment(x).format('YYYY-MM-DDTHH');
-                console.log(date);
+               
                 var axis = {
 
                     x: {
@@ -102,7 +103,7 @@ export default Ember.Route.extend({
                             format: function(x) {
 
                                 // + to convert to Number
-                                var formatDate = window.moment(+x).format('YYYY-MM-DDTHH');
+                                var formatDate = window.moment(+x).fromNow();//window.moment(+x).format('YYYY-MM-DDTHH');
                                 return formatDate;
                             }
 
@@ -111,9 +112,9 @@ export default Ember.Route.extend({
                     }
 
                 };
+
                 self.controllerFor('searchResults').set('timelineModel', model);
                 self.controllerFor('searchResults').set('timelineAxis', axis);
-                //self.controllerFor('application').set('items',items);
 
 
 

@@ -4,6 +4,7 @@ export default Ember.ObjectController.extend({
     needs: "application",
     searchTermsBinding: 'controllers.application.searchTerms',
     items: {},
+    //cacheQuery: false,
     totalResults: null,
     timelineModel: {},
     timelineAxis:{},
