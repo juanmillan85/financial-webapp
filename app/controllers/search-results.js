@@ -4,6 +4,7 @@ export default Ember.ObjectController.extend({
     needs: "application",
     searchTermsBinding: 'controllers.application.searchTerms',
     items: {},
+    searching:true,
     //cacheQuery: false,
     totalResults: null,
     timelineModel: {},
@@ -23,6 +24,10 @@ export default Ember.ObjectController.extend({
         if (!this.get('searchTerms'))
             this.set('searchTerms', this.get('q'));
     }.observes('q'),
+    isSearching: function(){
+        var numResults= this.get('totalResults');
+       this.set('searching',numResults==null);
+    }.observes('totalResults'),
     artistsIsChecked: true,
     songsIsChecked: true,
     queryParams: ['q', 'page', 'sortby', 'tq', 'ntq', 'timefilter'],

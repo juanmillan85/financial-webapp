@@ -24,7 +24,7 @@ export default Ember.Route.extend({
     },
     model: function(params) {
         var self = this;
-
+        self.controllerFor('searchResults').set('totalResults', null);
 
         console.log(params);
         var p, q, sortby, sortasc, tq, ntq;
@@ -56,74 +56,12 @@ export default Ember.Route.extend({
         }).then(
             function(resp) {
 
-                //console.log(resp);
-                var results = resp.items;
-                //return items
-                var items = [],
-                    i = 0,
-                    entry = null;
-                for (i = 0; i < results.length; i++) {
-                    entry = results[i];
-                    var item = self.store.push('item', entry);
-                    items.push(item);
-                }
+                //load list of results
+                Ember.run.scheduleOnce('afterRender', self, 'loadResults',resp);
+                //load timeline chart
+               Ember.run.scheduleOnce('afterRender', self, 'loadTimeline',resp);
 
-                //self.set('items',items);
-                self.controllerFor('searchResults').set('items', items);
-                self.controllerFor('searchResults').set('totalResults', resp.numResults);
-                var timeline = [];
-                  var query=self.controllerFor('searchResults').get('searchTerms');
-                var facet = resp.timelineState.facets.timeline.facets;
-                for (var i = 0; i < facet.length; i++) {
-
-                    timeline.push({
-                        value: Number(facet[i].value),
-                        count: facet[i].count
-                    });
-                }
                
-                 console.log(query);
-                var model = {
-                    json: timeline,
-                    keys: {
-                        x: 'value',
-                        value: ['count']
-                    },
-                    names: {
-                        count: query
-                    },
-                    type: 'area',
-
-                    types:{
-                        count:'area-spline'
-                    }
-                };
-               
-                var axis = {
-
-                    x: {
-                        type: 'timeseries',
-                        tick: {
-
-                            format: function(x) {
-
-                                // + to convert to Number
-                              
-                                var now=window.moment();
-                                var date=window.moment(+x);
-                                var formatDate=date.from(now);
-                                //var formatDate = window.moment(+x).fromNow(true);//window.moment(+x).format('YYYY-MM-DDTHH');
-                                return formatDate;
-                            }
-
-
-                        }
-                    }
-
-                };
-
-                self.controllerFor('searchResults').set('timelineModel', model);
-                self.controllerFor('searchResults').set('timelineAxis', axis);
 
 
 
@@ -144,7 +82,82 @@ export default Ember.Route.extend({
         if (!page)
             window.scrollTo(0, 0);
 
-    }
+    },
+    loadResults: function(resp){
+        var results = resp.items;
+                //return items
+                var items = [],
+                    i = 0,
+                    entry = null;
+                for (i = 0; i < results.length; i++) {
+                    entry = results[i];
+                    var item = this.store.push('item', entry);
+                    items.push(item);
+                }
+                var nResult=resp.numResults?resp.numResults:0;
+                this.controllerFor('searchResults').set('items', items);
+                this.controllerFor('searchResults').set('totalResults', nResult);
+    },
+    loadTimeline: function(resp){
+         var timeline = [];
+                var query = this.controllerFor('searchResults').get('searchTerms');
+                var facet = resp.timelineState.facets.timeline.facets;
+                for (var i = 0; i < facet.length; i++) {
 
+                    timeline.push({
+                        value: Number(facet[i].value),
+                        count: facet[i].count
+                    });
+                }
+
+                var model = {
+                    json: timeline,
+                    keys: {
+                        x: 'value',
+                        value: ['count']
+                    },
+                    names: {
+                        count: query
+                    },
+                    type: 'area',
+
+                    types: {
+                        count: 'area'
+                    }
+                };
+
+                var axis = {
+
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+
+                            format: function(x) {
+
+                                // + to convert to Number
+
+                                var now = window.moment();
+                                var date = window.moment(+x);
+                                var formatDate = date.from(now);
+                                //var formatDate = window.moment(+x).fromNow(true);//window.moment(+x).format('YYYY-MM-DDTHH');
+                                return formatDate;
+                            }
+
+
+                        }
+                    },
+                    y: {
+                        label: {
+                            text: '# Mentions',
+                            position: 'outer-middle'
+              
+                        }
+                    }
+
+                };
+
+                this.controllerFor('searchResults').set('timelineModel', model);
+                this.controllerFor('searchResults').set('timelineAxis', axis);
+    }
 
 });

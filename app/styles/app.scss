@@ -847,3 +847,18 @@ a:after {
 
 	//min-width: 580px;
 }
+&.bubble{
+	height:10%;
+}
+.bubble{
+	position:fixed;
+	top:200px;
+	left:45%;
+	opacity:70%;
+	z-index:20;
+}
+.timeline{
+ @media (max-width: 874px) {
+		 	width:100%;
+	}
+}

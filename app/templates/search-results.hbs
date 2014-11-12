@@ -1,54 +1,55 @@
+<div class="search-results-wrapper clearfix">
+  <div class="col-md-12">
+    <h5>
+      {{this.totalResults}} results for {{#link-to "search-results" }}{{applicationName}}{{/link-to}}
+    </h5>
+  </div>
+  <div class="search-facets col-md-2">
 
+    <ul class="facets">
+      <li>
+        <label>Related Users</label>
+        <p>Financial News</p>
+        <p>New York Time</p>
+        <p>@CarlitosNews</p>
+        <p>@OpeniTrending</p>
+      </li>
+      <li>
+        <label>CashTags</label>
+        <p>$GOOG</p>
+        <p>$APL</p>
+        <p>$FB</p>
+        <p>$OPENi</p>
+      </li>
+    </ul>
+  </div>
+  <div class="timeline col-xs-10">
+    <h3>Timeline</h3>
 
-    <div class="search-results-wrapper clearfix">
-      <div class="col-md-12">
-        <h5>{{this.totalResults}} results for {{#link-to "search-results" }}{{applicationName}}{{/link-to}}</h5>
-      </div>
-      <div class="search-facets col-md-2">
-
-        <ul class="facets">
-          <li>
-            <label>Related Users</label>
-            <p>Financial News</p>
-            <p>New York Time</p>
-            <p>@CarlitosNews</p>
-            <p>@OpeniTrending</p>
-          </li>
-          <li>
-            <label>CashTags</label>
-            <p>$GOOG</p>
-            <p>$APL</p>
-            <p>$FB</p>
-            <p>$OPENi</p>
-          </li>
-        </ul>
-      </div>
-      <div class="timeline col-xs-10">
-        <h3>Timeline</h3>
-         {{#if this.timelineModel}}
-         <div id="chart">
-
-        {{timeline-chart  axis=this.timelineAxis data=this.timelineModel query=this.q}}
-         {{else}}
-           <h4>Loading</h4>
-        {{/if}}
-        </div>
-      </div>
-
-      <div class="results col-md-8 col-md-offset-2">
-        {{#if this.items.length}}
-        <h3>Social Media News</h3>
-
-        <ul class="search-results artists">
-          {{#each item in this.items}}
-          <li>{{view 'item' contentBinding="item"}}</li>
-          {{/each}}
-        </ul>
-        {{else}}
-        <h3>Sorry, we couldn't find any results .<br>
-Try another search or explore FinancialLife categories </h3>
-        {{/if}}
-       
-      </div>
-
+    <div id="chart">
+     {{timeline-chart  axis=this.timelineAxis data=this.timelineModel query=this.q}}
+      {{#if this.searching}}
+          {{loading-bubbles  color='#ea8014' size=50}}
+      {{/if}}
     </div>
+  </div>
+
+  <div class="results col-md-8 col-md-offset-2">
+    {{#if this.items.length}}
+    <h3>Social Media News</h3>
+
+    <ul class="search-results artists">
+      {{#each item in this.items}}
+      <li>{{view 'item' contentBinding="item"}}</li>
+      {{/each}}
+    </ul>
+   
+
+    {{else}}
+     <h3>
+      Sorry, we couldn't find any results .
+      <br>Try another search or explore FinancialLife categories</h3>
+    {{/if}}
+  </div>
+
+</div>
