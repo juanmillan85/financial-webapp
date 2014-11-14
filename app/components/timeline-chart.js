@@ -92,9 +92,9 @@ export default Ember.Component.extend({
     dataNamesDidChange: function() {
         var data = this.get('data');
         var dataCache = this.get('dataCache');
-        var names = data.names.count;
-        var dataNames = dataCache ? dataCache.names.count : undefined;
-        var result=!(names == dataNames);
+        var names = data.keys.value;
+        var dataNames = dataCache ? dataCache : undefined;
+        var result = !(names.toString() == dataNames.toString());
         return result;
     },
 
@@ -115,13 +115,15 @@ export default Ember.Component.extend({
             } else {
                 //change query cache
                 var data = self.get('data');
-                self.set('dataCache', data);
+                if (data.keys) {
+                    self.set('dataCache', data.keys.value.concat());
 
-                var config = self.get('_config');
-                var chart = c3.generate(config);
-                self.set('_chart', chart);
-              
-                return chart;
+                    var config = self.get('_config');
+                    var chart = c3.generate(config);
+                    self.set('_chart', chart);
+
+                    return chart;
+                }
             }
         } else {
             // Editor is already created and cached.
