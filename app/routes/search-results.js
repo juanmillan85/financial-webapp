@@ -10,7 +10,7 @@ export default Ember.Route.extend({
             refreshModel: true
         },
         page: {
-            refreshModel: true
+            refreshModel: false
         },
         sortby: {
             refreshModel: true
@@ -25,32 +25,36 @@ export default Ember.Route.extend({
     model: function(params) {
         var self = this;
         self.controllerFor('searchResults').set('totalResults', null);
+        params.page="0";
 
-        console.log(params);
-        var p, q, sortby, sortasc, tq, ntq;
         if (!params.q) {
-            return []; // no results;
+            return []; // no results
         }
-        q = params.q ? params.q : '';
-        p = params.page ? params.page : 0;
-        sortby = params.sortby ? params.sortby : 'created_at';
-        sortasc = params.sortasc ? params.sortasc : true;
-        tq = params.tq ? params.tq : 'd';
-        ntq = params.ntq ? params.ntq : 30;
-        var cashtags = [],
-            hashtags;
-        if (q) {
-            cashtags = twttr.txt.extractCashtags(q);
-            hashtags = twttr.txt.extractHashtags(q);
-            cashtags.concat(hashtags);
+        this.searchQuery(params);
+        //page 
+        return params.page;
+
+
+
+    },
+    searchQuery: function(params) {
+        params.q = params.q ? params.q : '';
+        params.page = params.page ? params.page : 0;
+        params.sortby = params.sortby ? params.sortby : 'created_at';
+        params.sortasc = params.sortasc ? params.sortasc : true;
+        params.tq = params.tq ? params.tq : 'd';
+        params.ntq = params.ntq ? params.ntq : 30;
+        params.cashtags = Ember.A([]);;
+        var hashtags = [];
+        if (params.q) {
+            params.cashtags.pushObjects(twttr.txt.extractCashtags(params.q));
+            hashtags = twttr.txt.extractHashtags(params.q);
+            params.cashtags.pushObjects(hashtags);
         }
 
+        var self = this;
+        var url = "http://ambiecities.com:8079/news?q=" + params.q + '&p=' + params.page + '&sortby=' + params.sortby + '&sortasc=' + params.sortasc + '&tq=' + params.tq + '&ntq=' + params.ntq + '&tags=' + params.cashtags;
 
-
-
-        var url = "http://ambiecities.com:8079/news?q=" + q + '&p=' + p + '&sortby=' + sortby + '&sortasc=' + sortasc + '&tq=' + tq + '&ntq=' + ntq + '&tags=' + cashtags;
-
-        q = q != "" ? q : "Number of Tweets";
         ajax({
             type: 'GET',
             // The URL to make the request to.
@@ -66,7 +70,8 @@ export default Ember.Route.extend({
                 //load list of results
                 Ember.run.scheduleOnce('afterRender', self, 'loadResults', resp);
                 //load timeline chart
-                Ember.run.scheduleOnce('afterRender', self, 'loadTimeline', resp);
+                if (params.page == "0")
+                    Ember.run.scheduleOnce('afterRender', self, 'loadTimeline', resp);
 
 
 
@@ -77,36 +82,38 @@ export default Ember.Route.extend({
                 //send error event
             }
         );
-        //page 
-        return p;
-
-
 
     },
 
     afterModel: function(page, transition) {
-        console.log(transition);
-        if (!page)
+        
+        if (page=="0")
             window.scrollTo(0, 0);
 
     },
     loadResults: function(resp) {
         var results = resp.items;
+        var items = Ember.A([]);
+        if (this.controllerFor('searchResults').get('totalResults')) {
+            items = this.controllerFor('searchResults').get('items');
+        } else {
+            var nResult = resp.numResults ? resp.numResults : 0;
+            this.controllerFor('searchResults').set('totalResults', nResult);
+        }
+
         //validate 0 results
         if (results) {
             //return items
-            var items = [],
-                i = 0,
+            var i = 0,
                 entry = null;
             for (i = 0; i < results.length; i++) {
                 entry = results[i];
                 var item = this.store.push('item', entry);
-                items.push(item);
+                items.pushObject(item);
             }
         }
-        var nResult = resp.numResults ? resp.numResults : 0;
         this.controllerFor('searchResults').set('items', items);
-        this.controllerFor('searchResults').set('totalResults', nResult);
+
 
     },
     loadTimeline: function(resp) {
@@ -115,9 +122,9 @@ export default Ember.Route.extend({
         var facet = resp.timelineState.facets.timeline.facets;
         var groups = [];
         var data;
-        var x=['x'];
-        var columns=[x];
-        var j=0;
+        var x = ['x'];
+        var columns = [x];
+        var j = 0;
         for (var i = 0; i < facet.length; i++) {
             var name = facet[i].field.trim();
             var index = groups.indexOf(name);
@@ -128,7 +135,7 @@ export default Ember.Route.extend({
                 columns.push([name]);
             }
 
-            if(x.indexOf(Number(facet[i].value))==-1){
+            if (x.indexOf(Number(facet[i].value)) == -1) {
                 x.push(Number(facet[i].value));
             }
 
@@ -141,8 +148,8 @@ export default Ember.Route.extend({
 
         var model = {
             //json: timeline,
-            x:'x',
-            columns:columns,
+            x: 'x',
+            columns: columns,
             keys: {
                 x: 'value',
                 value: groups
@@ -186,6 +193,12 @@ export default Ember.Route.extend({
 
         this.controllerFor('searchResults').set('timelineModel', model);
         this.controllerFor('searchResults').set('timelineAxis', axis);
+    },
+
+    actions: {
+        loadMore: function(params) {
+                   this.searchQuery(params);
+        }
     }
 
 });

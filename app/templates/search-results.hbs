@@ -27,7 +27,7 @@
     <h3>Timeline</h3>
 
     <div id="chart">
-     {{timeline-chart  axis=this.timelineAxis data=this.timelineModel query=this.q}}
+      {{timeline-chart  axis=this.timelineAxis data=this.timelineModel query=this.q}}
       {{#if this.searching}}
           {{loading-bubbles  color='#ea8014' size=50}}
       {{/if}}
@@ -43,14 +43,15 @@
       <li>{{view 'item' contentBinding="item"}}</li>
       {{/each}}
     </ul>
-   
+    
+    {{infinite-scroller-items contextController=this modelName='item'}}
 
     {{else}}
     {{#unless this.searching}}
-     <h3>
+    <h3>
       Sorry, we couldn't find any results .
       <br>Try another search or explore FinancialLife categories</h3>
-      {{/unless}}
+    {{/unless}}
     {{/if}}
   </div>
 

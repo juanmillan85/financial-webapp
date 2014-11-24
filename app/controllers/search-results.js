@@ -4,11 +4,11 @@ export default Ember.ObjectController.extend({
     needs: "application",
     searchTermsBinding: 'controllers.application.searchTerms',
     items: {},
-    searching:true,
+    searching: true,
     //cacheQuery: false,
     totalResults: null,
     timelineModel: {},
-    timelineAxis:{},
+    timelineAxis: {},
     didItemsChange: function() {
         var items = this.get('items');
     }.observes('items.length'),
@@ -24,9 +24,12 @@ export default Ember.ObjectController.extend({
         if (!this.get('searchTerms'))
             this.set('searchTerms', this.get('q'));
     }.observes('q'),
-    isSearching: function(){
-        var numResults= this.get('totalResults');
-       this.set('searching',numResults==null);
+    isSearching: function() {
+        var numResults = this.get('totalResults');
+        this.set('searching', numResults == null);
+        if(!this.get('searching'))
+         this.set('page',0);
+
     }.observes('totalResults'),
     artistsIsChecked: true,
     songsIsChecked: true,
@@ -79,6 +82,29 @@ export default Ember.ObjectController.extend({
 
              this.transitionToRoute('song', model.enid);
              */
+        },
+        loadMore: function(todo) {
+            var page=+this.get('page');
+
+            this.set('page', ++page);
+            var query = this.get('queryParams');
+            var q = this.get('q');
+            var page = this.get('page');
+            var tq = this.get('tq');
+            var ntq = this.get('ntq');
+            var timefilter = this.get('timefilter');
+
+            this.get('target').send('loadMore', {
+                q: q,
+                page: page,
+                tq: tq,
+                ntq: ntq,
+                timefilter: timefilter
+            });
+
+            // this.transitionTo({queryParams: {direction: 'asc'}});
+            //this.transitionToRoute('search-results', query);
         }
-    }
+    },
+
 });
