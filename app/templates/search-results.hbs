@@ -1,10 +1,13 @@
 <div class="search-results-wrapper clearfix">
   <div class="col-md-12">
     <h5>
-      {{this.totalResults}} results for {{#link-to "search-results" }}{{applicationName}}{{/link-to}}
+    <span class="results-header">
+      {{this.totalResults}} results on {{#link-to "search-results" }}{{applicationName}}{{/link-to}} {{formatTimeFilter}}
+      </span>
     </h5>
   </div>
-  <div class="search-facets col-md-2">
+
+<!--  <div class="search-facets col-md-2">
 
     <ul class="facets">
       <li>
@@ -23,7 +26,8 @@
       </li>
     </ul>
   </div>
-  <div class="timeline col-xs-10">
+  -->
+  <div class="timeline col-xs-12">
     <h3>Timeline</h3>
 
     <div id="chart">
@@ -34,7 +38,8 @@
     </div>
   </div>
 
-  <div class="results col-md-8 col-md-offset-2">
+<!--  <div class="results col-md-8 col-md-offset-2">-->
+<div class="results col-xs-12">
     {{#if this.items.length}}
     <h3>Social Media News</h3>
 

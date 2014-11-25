@@ -155,7 +155,9 @@ footer {
 	div.search-results-wrapper {
 		border-radius:0px;
 		background:#b3b3b3;
-		
+		.results-header{
+				 font-weight: bold;
+			}
 
 		div.search-facets {
 			
@@ -183,6 +185,7 @@ footer {
 			//margin:  2px  2px 2px 2px;
 			background-color: rgba(255,255,255,.7);
 			float: left;
+			
 			ul.search-results {
 				padding-left:2px;
 				li {
@@ -525,8 +528,7 @@ Timeline Chart
 				height: 2.2em;
 				width: 78%;
 				padding: 1em;
-				padding-top: 4px;
-				text-align: center;
+				
 			}
 		}
 	}
@@ -535,7 +537,7 @@ Timeline Chart
   .navbar-inverse ul.search-lockup .search-group button {
   	width:17%;
 	right: -2;
-    top: 5px;
+   // top: 5px;
   }  
 
 

@@ -15,7 +15,7 @@ export default Ember.ObjectController.extend({
     applicationName: function() {
         var st = this.get('searchTerms');
         if (st) {
-            return st + "???";
+            return st ;
         } else {
             return "Financial Life";
         }
@@ -27,10 +27,30 @@ export default Ember.ObjectController.extend({
     isSearching: function() {
         var numResults = this.get('totalResults');
         this.set('searching', numResults == null);
-        if(!this.get('searching'))
-         this.set('page',0);
+        if (!this.get('searching'))
+            this.set('page', 0);
 
     }.observes('totalResults'),
+    formatTimeFilter: function() {
+        var timefilter = this.get('timefilter');
+        switch (timefilter) {
+            case "filter-hour":
+                return "the last hour"
+                break;
+            case "filter-six":
+                return "the last 6 hours"
+                break;
+            case "filter-twenty":
+                return "the last 24 hours"
+                break;
+            case "filter-week":
+                return "the last week"
+                break;
+
+            default:
+                return "the last month"
+        }
+    }.property('timefilter'),
     artistsIsChecked: true,
     songsIsChecked: true,
     queryParams: ['q', 'page', 'sortby', 'tq', 'ntq', 'timefilter'],
@@ -84,7 +104,7 @@ export default Ember.ObjectController.extend({
              */
         },
         loadMore: function(todo) {
-            var page=+this.get('page');
+            var page = +this.get('page');
 
             this.set('page', ++page);
             var query = this.get('queryParams');
