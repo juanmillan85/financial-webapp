@@ -176,9 +176,9 @@ export default Ember.Route.extend({
                         var formatDate = date.from(now);
                         //var formatDate = window.moment(+x).fromNow(true);//window.moment(+x).format('YYYY-MM-DDTHH');
                         return formatDate;
-                    }
-
-
+                    },
+                   rotate: 60,
+                multiline: true
                 }
             },
             y: {

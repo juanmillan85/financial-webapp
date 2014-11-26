@@ -117,7 +117,12 @@ export default Ember.Component.extend({
                 var data = self.get('data');
                 if (data.keys) {
                     self.set('dataCache', data.keys.value.concat());
-
+                    this.set('padding', {
+                        top: 0,
+                        right: 20,
+                        bottom: 50,
+                        left: 35,
+                    });
                     var config = self.get('_config');
                     var chart = c3.generate(config);
                     self.set('_chart', chart);
@@ -153,6 +158,7 @@ export default Ember.Component.extend({
             'color',
             'transition'
         ]);
+
         c.bindto = self.get('element');
         return c;
     }.property('element',
