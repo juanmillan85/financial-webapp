@@ -27,9 +27,9 @@ export default Ember.Route.extend({
         self.controllerFor('searchResults').set('totalResults', null);
         params.page="0";
 
-        if (!params.q) {
-            return []; // no results
-        }
+        //if (!params.q) {
+        //    return []; // no results
+        //}
         this.searchQuery(params);
         //page 
         return params.page;
@@ -53,7 +53,7 @@ export default Ember.Route.extend({
         }
 
         var self = this;
-        var url = "http://ambiecities.com:8079/news?q=" + params.q + '&p=' + params.page + '&sortby=' + params.sortby + '&sortasc=' + params.sortasc + '&tq=' + params.tq + '&ntq=' + params.ntq + '&tags=' + params.cashtags;
+        var url = "http://localhost:8079/news?q=" + params.q + '&p=' + params.page + '&sortby=' + params.sortby + '&sortasc=' + params.sortasc + '&tq=' + params.tq + '&ntq=' + params.ntq + '&tags=' + params.cashtags;
 
         ajax({
             type: 'GET',

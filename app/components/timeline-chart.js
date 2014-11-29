@@ -121,7 +121,7 @@ export default Ember.Component.extend({
                         top: 0,
                         right: 20,
                         bottom: 50,
-                        left: 35,
+                        left: 47,
                     });
                     var config = self.get('_config');
                     var chart = c3.generate(config);
