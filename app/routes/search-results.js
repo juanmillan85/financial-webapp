@@ -53,7 +53,7 @@ export default Ember.Route.extend({
         }
 
         var self = this;
-        var url = "http://localhost:8079/news?q=" + params.q + '&p=' + params.page + '&sortby=' + params.sortby + '&sortasc=' + params.sortasc + '&tq=' + params.tq + '&ntq=' + params.ntq + '&tags=' + params.cashtags;
+        var url = "http://ambiecities:8079/news?q=" + params.q + '&p=' + params.page + '&sortby=' + params.sortby + '&sortasc=' + params.sortasc + '&tq=' + params.tq + '&ntq=' + params.ntq + '&tags=' + params.cashtags;
 
         ajax({
             type: 'GET',
