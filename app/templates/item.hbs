@@ -12,14 +12,33 @@
 	{{#if item.entities.length}}
 	<div  class="row">
 	 {{#each entitie in item.entities}}
-		<a href="#" class="">
-			<img {{bind-attr src="entitie"}} class="img-thumbnail img-responsive"></a>
-
+	 	{{#if entitie}}
+				{{#each link in item.links}}
+						{{#if link}}
+	 					<a {{bind-attr href="link"}} target="_blank" class="">
+	 						<img {{bind-attr src="entitie"}} class="img-thumbnail img-responsive">
+	 					</a>
+	 					{{else}}
+	 					<a>
+							<img {{bind-attr src="entitie"}} class="img-thumbnail img-responsive">
+							</a>
+						{{/if}}
+				{{/each}}
+		{{/if}}
 	{{/each}}
 	</div>
 	{{/if}}
 <span> <i class="fa fa-twitter"></i> <i class="fa fa-retweet">{{item.shares}}</i>
-	<i class="fa fa-star">{{item.likes}}</i>
+	<i class="fa fa-star">{{item.likes}}</i> 
+	
+	 	{{#each link in item.links}}
+	 		{{#if link}}
+	 			<a {{bind-attr href="link"}} target="_blank"  class="">
+	 				<i class="fa fa-info-circle">			</i>
+	 			</a>
+	 		{{/if}}
+		{{/each}}
+
 </span>
 
 </div>
